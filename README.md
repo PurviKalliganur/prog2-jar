@@ -13,3 +13,28 @@ git add .
 git commit -m "Removed AppTest"
 git pull origin main --allow-unrelated-histories
 git push origin main
+------------------------------------------------
+pipeline { 
+    agent any 
+ 
+    tools { 
+        maven 'Maven' 
+        jdk 'JDK' 
+    } 
+ 
+    stages { 
+ 
+        stage('Checkout') { 
+            steps { 
+                git branch: 'main', 
+                url: URL 
+            } 
+        } 
+ 
+        stage('Build') { 
+            steps { 
+                bat 'mvn clean package' 
+            } 
+        } 
+    } 
+} 
